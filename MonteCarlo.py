@@ -94,7 +94,7 @@ class MonteCarlo:
         df.to_excel('Possibiladades.xlsx')
 
     def plot(self, df):
-        plt.figure(figsize=(10,7))
+        plt.figure(figsize=(20,6))
 
         _, df_paths, paths_list_t = self.pathPorOrg(df)
 
