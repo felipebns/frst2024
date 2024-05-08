@@ -7,9 +7,6 @@ merged_df = pd.merge(user_paths_df, all_paths_df, left_on="path_actions", right_
 
 path_frequency = merged_df["path_name"].value_counts()
 
-#print(path_frequency)
-
-
 total_count = path_frequency.sum()
 
 path_frequency = (path_frequency/total_count)
