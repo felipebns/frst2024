@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1000px;
+                 height: 700px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#b40426", "font": {"color": "#b40426"}, "id": "home-hall", "label": "home-hall", "shape": "dot", "size": 13}, {"color": "#f7b89c", "font": {"color": "#f7b89c"}, "id": "acessar meus desafios-hall", "label": "acessar meus desafios-hall", "shape": "dot", "size": 9}, {"color": "#c5d6f2", "font": {"color": "#c5d6f2"}, "id": "handleViewDesafioSRG-hall", "label": "handleViewDesafioSRG-hall", "shape": "dot", "size": 6}, {"color": "#f4987a", "font": {"color": "#f4987a"}, "id": "acessar conte\u00fados em v\u00eddeo-lxp", "label": "acessar conte\u00fados em v\u00eddeo-lxp", "shape": "dot", "size": 10}, {"color": "#6f92f3", "font": {"color": "#6f92f3"}, "id": "onboardingAdmin-to Step 3", "label": "onboardingAdmin-to Step 3", "shape": "dot", "size": 2}, {"color": "#6f92f3", "font": {"color": "#6f92f3"}, "id": "onboardingAdmin-skip", "label": "onboardingAdmin-skip", "shape": "dot", "size": 2}, {"color": "#c5d6f2", "font": {"color": "#c5d6f2"}, "id": "click em trilhas-lxp", "label": "click em trilhas-lxp", "shape": "dot", "size": 3}, {"color": "#dddcdc", "font": {"color": "#dddcdc"}, "id": "handleOpenModalSRG-hall", "label": "handleOpenModalSRG-hall", "shape": "dot", "size": 7}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "criar conte\u00fado-lxp", "label": "criar conte\u00fado-lxp", "shape": "dot", "size": 2}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "home-hall-manager", "label": "home-hall-manager", "shape": "dot", "size": 3}, {"color": "#8db0fe", "font": {"color": "#8db0fe"}, "id": "onboardingAdmin-to Step 4", "label": "onboardingAdmin-to Step 4", "shape": "dot", "size": 2}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "onboarding-skip", "label": "onboarding-skip", "shape": "dot", "size": 7}, {"color": "#3b4cc0", "font": {"color": "#3b4cc0"}, "id": "handle-busc-semantica-hall", "label": "handle-busc-semantica-hall", "shape": "dot", "size": 3}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "modal-SRG", "label": "modal-SRG", "shape": "dot", "size": 6}, {"color": "#dddcdc", "font": {"color": "#dddcdc"}, "id": "handleCloseDesafioModalSRG-hall", "label": "handleCloseDesafioModalSRG-hall", "shape": "dot", "size": 4}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "onboarding-to Community", "label": "onboarding-to Community", "shape": "dot", "size": 2}, {"color": "#8db0fe", "font": {"color": "#8db0fe"}, "id": "onboarding-to Profile", "label": "onboarding-to Profile", "shape": "dot", "size": 4}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "handleSkipPrezziSRG-hall", "label": "handleSkipPrezziSRG-hall", "shape": "dot", "size": 2}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "onboardingAdmin-to Step 2", "label": "onboardingAdmin-to Step 2", "shape": "dot", "size": 2}, {"color": "#6f92f3", "font": {"color": "#6f92f3"}, "id": "onboarding-to Step 2", "label": "onboarding-to Step 2", "shape": "dot", "size": 1}, {"color": "#5470de", "font": {"color": "#5470de"}, "id": "onboarding-to Step 3", "label": "onboarding-to Step 3", "shape": "dot", "size": 2}]);
+                  edges = new vis.DataSet([{"from": "home-hall", "normalized_value": 31, "to": "acessar meus desafios-hall", "width": 1}, {"from": "home-hall", "normalized_value": 4, "to": "handleViewDesafioSRG-hall", "width": 1}, {"from": "home-hall", "normalized_value": 31, "to": "acessar conte\u00fados em v\u00eddeo-lxp", "width": 1}, {"from": "home-hall", "normalized_value": 100, "to": "home-hall", "width": 1}, {"from": "home-hall", "normalized_value": 1, "to": "onboardingAdmin-to Step 3", "width": 1}, {"from": "home-hall", "normalized_value": 7, "to": "onboardingAdmin-skip", "width": 1}, {"from": "home-hall", "normalized_value": 8, "to": "click em trilhas-lxp", "width": 1}, {"from": "home-hall", "normalized_value": 2, "to": "handleOpenModalSRG-hall", "width": 1}, {"from": "home-hall", "normalized_value": 2, "to": "criar conte\u00fado-lxp", "width": 1}, {"from": "home-hall", "normalized_value": 2, "to": "home-hall-manager", "width": 1}, {"from": "home-hall", "normalized_value": 2, "to": "onboardingAdmin-to Step 4", "width": 1}, {"from": "home-hall", "normalized_value": 3, "to": "onboarding-skip", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 12, "to": "handleViewDesafioSRG-hall", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 4, "to": "acessar conte\u00fados em v\u00eddeo-lxp", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 83, "to": "acessar meus desafios-hall", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 1, "to": "handle-busc-semantica-hall", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 13, "to": "modal-SRG", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 3, "to": "handleCloseDesafioModalSRG-hall", "width": 1}, {"from": "acessar meus desafios-hall", "normalized_value": 8, "to": "handleOpenModalSRG-hall", "width": 1}, {"from": "handleViewDesafioSRG-hall", "normalized_value": 6, "to": "handleCloseDesafioModalSRG-hall", "width": 1}, {"from": "handleViewDesafioSRG-hall", "normalized_value": 3, "to": "handleOpenModalSRG-hall", "width": 1}, {"from": "handleViewDesafioSRG-hall", "normalized_value": 2, "to": "acessar conte\u00fados em v\u00eddeo-lxp", "width": 1}, {"from": "handleViewDesafioSRG-hall", "normalized_value": 1, "to": "onboarding-skip", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 36, "to": "click em trilhas-lxp", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 1, "to": "handleOpenModalSRG-hall", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 67, "to": "acessar conte\u00fados em v\u00eddeo-lxp", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 1, "to": "onboarding-to Community", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 2, "to": "onboarding-to Profile", "width": 1}, {"from": "acessar conte\u00fados em v\u00eddeo-lxp", "normalized_value": 2, "to": "criar conte\u00fado-lxp", "width": 1}, {"from": "click em trilhas-lxp", "normalized_value": 1, "to": "onboardingAdmin-skip", "width": 1}, {"from": "handle-busc-semantica-hall", "normalized_value": 5, "to": "handle-busc-semantica-hall", "width": 1}, {"from": "modal-SRG", "normalized_value": 93, "to": "modal-SRG", "width": 1}, {"from": "modal-SRG", "normalized_value": 5, "to": "handleOpenModalSRG-hall", "width": 1}, {"from": "modal-SRG", "normalized_value": 13, "to": "handleCloseDesafioModalSRG-hall", "width": 1}, {"from": "modal-SRG", "normalized_value": 4, "to": "handleSkipPrezziSRG-hall", "width": 1}, {"from": "handleOpenModalSRG-hall", "normalized_value": 5, "to": "handleCloseDesafioModalSRG-hall", "width": 1}, {"from": "handleOpenModalSRG-hall", "normalized_value": 1, "to": "handleSkipPrezziSRG-hall", "width": 1}, {"from": "onboardingAdmin-to Step 2", "normalized_value": 2, "to": "onboardingAdmin-to Step 3", "width": 1}, {"from": "onboardingAdmin-to Step 2", "normalized_value": 1, "to": "onboardingAdmin-to Step 4", "width": 1}, {"from": "onboarding-to Step 2", "normalized_value": 5, "to": "onboarding-to Step 3", "width": 1}, {"from": "onboarding-to Step 3", "normalized_value": 2, "to": "onboarding-skip", "width": 1}, {"from": "onboarding-skip", "normalized_value": 8, "to": "onboarding-skip", "width": 1}, {"from": "onboarding-skip", "normalized_value": 3, "to": "onboarding-to Community", "width": 1}, {"from": "onboarding-skip", "normalized_value": 2, "to": "onboarding-to Profile", "width": 1}, {"from": "onboarding-to Profile", "normalized_value": 1, "to": "onboarding-to Profile", "width": 1}, {"from": "home-hall-manager", "normalized_value": 1, "to": "home-hall-manager", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        },
+        "arrows": {
+            "to": {
+                "enabled": true,
+                "type": "arrow",
+                "scaleFactor": 0.5  // Change the scaleFactor to adjust arrow size
+            }
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
